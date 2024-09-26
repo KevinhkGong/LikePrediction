@@ -65,9 +65,15 @@ To train any of the models, run the corresponding script:
 
 ### Testing
 You can test the models on new Instagram posts using the provided test script:
-- **Test on new data**:
+- **Test on Random Forest**:
     ```bash
-    python test.py 
+    python test_random_forest.py 
+    ```
+    Fill in the new test data at the bottom, this script will automatically categorize photo with clip.
+    Change use_multi on line 87 to decide classification with multiclass or threeclass
+- **Test on Zero-Shot Clip**:
+    ```bash
+    python test_zeroshot.py 
     ```
     The test script will output the predicted likes class based on the input image and metadata.
     Fill in the information regarding the testing data and run the script
