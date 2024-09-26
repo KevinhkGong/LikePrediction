@@ -28,8 +28,8 @@ results = []
 image_features_list = []  # To store the CLIP image features
 
 # Check if results are already saved
-if os.path.exists('image_classification_results.csv'):
-    results_df = pd.read_csv('image_classification_results.csv')
+if os.path.exists('exported_data/image_classification_results.csv'):
+    results_df = pd.read_csv('exported_data/image_classification_results.csv')
     # Convert the 'Image Features' column back to NumPy arrays
     results_df['Image Features'] = results_df['Image Features'].apply(lambda x: np.fromstring(x, sep=','))
     image_features_list = np.stack(results_df['Image Features'].values)  # Stack them back into an array
@@ -180,4 +180,4 @@ with torch.no_grad():
     print(f"Accuracy on the test set: {accuracy:.4f}")
 
 # Optional: Save the model
-torch.save(model.state_dict(), "likes_classification_model_threeClass.pth")
+torch.save(model.state_dict(), "Models/likes_classification_model_threeClass.pth")

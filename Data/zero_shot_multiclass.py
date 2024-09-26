@@ -110,8 +110,8 @@ def main():
     num_epochs = 50
 
     # Check if results are already saved
-    if os.path.exists('image_classification_results.csv'):
-        results_df = pd.read_csv('image_classification_results.csv')
+    if os.path.exists('exported_data/image_classification_results.csv'):
+        results_df = pd.read_csv('exported_data/image_classification_results.csv')
 
         # Convert the 'Image Features' column back to NumPy arrays
         results_df['Image Features'] = results_df['Image Features'].apply(lambda x: np.fromstring(x, sep=','))
@@ -287,7 +287,7 @@ def main():
     print(f"Accuracy on the test set: {accuracy:.4f}")
 
     # Optional: Save the model
-    torch.save(model.state_dict(), "likes_classification_model.pth")
+    torch.save(model.state_dict(), "Models/likes_classification_model.pth")
 
 if __name__ == "__main__":
     # Only runs when you execute zero_shot_multiclass.py directly

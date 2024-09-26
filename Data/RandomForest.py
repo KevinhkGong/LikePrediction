@@ -24,8 +24,8 @@ results = []
 
 
 
-if os.path.exists('image_classification_results_no_feature.csv'):
-    results_df = pd.read_csv('image_classification_results_no_feature.csv')
+if os.path.exists('exported_data/image_classification_results_no_feature.csv'):
+    results_df = pd.read_csv('exported_data/image_classification_results_no_feature.csv')
 else:
     for image_file in os.listdir(image_dir):
         if image_file.endswith(".jpg") or image_file.endswith(".png"):  # Check for image files

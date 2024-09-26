@@ -17,7 +17,7 @@ categories = [
 ]
 
 # Load the pre-trained model
-model_path = "likes_classification_model.pth"
+model_path = "Models/likes_classification_model.pth"
 use_hybrid = False  # Set to True if you're using the hybrid model
 state_dict = torch.load(model_path, map_location=device)
 # Check if the state dict keys are wrapped in 'module.'
