@@ -1,5 +1,5 @@
 # Instagram Likes Prediction
-[**Slides for Findings**](https://docs.google.com/presentation/d/1ybqkFQ-0CWpl1irJLGifZJj1PY5MvviVbi2z9hf3FJY/edit?usp=sharing)
+**Presentation:** [**Slides**](https://docs.google.com/presentation/d/1ybqkFQ-0CWpl1irJLGifZJj1PY5MvviVbi2z9hf3FJY/edit?usp=sharing)
 ## Overview
 This project explores the prediction of Instagram post likes using a combination of image data and post metadata (e.g., comments, followers). The repository implements and compares various machine learning models to determine which model best predicts the number of likes on Instagram posts.
 
