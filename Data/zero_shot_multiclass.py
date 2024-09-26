@@ -163,7 +163,6 @@ def main():
         results_df = pd.DataFrame(results)
         results_df.to_csv("image_classification_results.csv", index=False)
 
-    # Now that we have image features, let's continue with the metadata
     print(results_df)
 
     # Load metadata and merge with the results_df
@@ -193,14 +192,12 @@ def main():
                                      labels=[0, 1, 2, 3, 4, 5])
     y = metadata['likes_class'].astype(int).values  # Target labels
 
-    # Step 10: Train/test split
     X_train_meta, X_test_meta, y_train, y_test = train_test_split(X_metadata, y, test_size=0.2, random_state=42)
 
     # Convert to PyTorch tensors
     y_train_tensor = torch.tensor(y_train, dtype=torch.long)
     y_test_tensor = torch.tensor(y_test, dtype=torch.long)
 
-    # Custom dataset to return both images and metadata
 
     # Create dataset and dataloader
     transform = preprocess  # Use CLIP's preprocessing
@@ -238,7 +235,7 @@ def main():
         model.train()
         running_loss = 0.0
         print("Start Training")
-        for img_batch, meta_batch in train_loader:  # Load images and metadata together
+        for img_batch, meta_batch in train_loader:  #
             img_batch = img_batch.to(device)
             meta_batch = meta_batch.to(device)
             labels = y_train_tensor[:len(meta_batch)].to(device)  # Ensure labels match the batch size
@@ -257,13 +254,12 @@ def main():
         print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {running_loss / len(train_loader):.4f}")
 
 
-    # Step 13: Evaluate the model on the test set
     model.eval()
     correct = 0
     total = 0
 
     with torch.no_grad():
-        for img_batch, meta_batch in train_loader:  # Loop over the test set in batches
+        for img_batch, meta_batch in train_loader:
             img_batch = img_batch.to(device)
             meta_batch = meta_batch.to(device)
 
@@ -286,9 +282,7 @@ def main():
     accuracy = correct / total
     print(f"Accuracy on the test set: {accuracy:.4f}")
 
-    # Optional: Save the model
     torch.save(model.state_dict(), "Models/likes_classification_model.pth")
 
 if __name__ == "__main__":
-    # Only runs when you execute zero_shot_multiclass.py directly
     main()

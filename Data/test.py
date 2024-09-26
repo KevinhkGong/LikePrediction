@@ -6,7 +6,7 @@ import clip
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
-from zero_shot_multiclass import CLIPOnlyNetwork, HybridNetwork  # Import your models from zero_shot_multiclass.py
+from zero_shot_multiclass import CLIPOnlyNetwork, HybridNetwork
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -42,7 +42,7 @@ model.eval()
 clip_model, preprocess = clip.load("ViT-B/32", device=device)
 
 # Load the original training data to refit the scaler
-train_data = pd.read_csv("instagram_data.csv")  # Replace with your actual training data file
+train_data = pd.read_csv("instagram_data.csv")
 scaler = MinMaxScaler()
 
 # Function to preprocess the image and metadata for CLIP-only model

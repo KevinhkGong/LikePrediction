@@ -1,11 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Load the dataset
 file_path = 'instagram_data.csv'
 data = pd.read_csv(file_path)
-
-# Check the 'likes' column distribution
 likes = data['likes'].astype(int)
 print(likes)
 print(likes.max())

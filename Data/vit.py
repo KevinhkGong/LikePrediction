@@ -11,8 +11,6 @@ from torchvision import transforms
 model_name = "google/vit-base-patch16-224-in21k"
 feature_extractor = ViTFeatureExtractor.from_pretrained(model_name)
 model = ViTForImageClassification.from_pretrained(model_name, num_labels=6)  # 6 classes
-
-# Ensure model is on the right device
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Wrap model with DataParallel to allow multi-GPU usage

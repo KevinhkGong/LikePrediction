@@ -32,7 +32,7 @@ if os.path.exists('exported_data/image_classification_results.csv'):
     results_df = pd.read_csv('exported_data/image_classification_results.csv')
     # Convert the 'Image Features' column back to NumPy arrays
     results_df['Image Features'] = results_df['Image Features'].apply(lambda x: np.fromstring(x, sep=','))
-    image_features_list = np.stack(results_df['Image Features'].values)  # Stack them back into an array
+    image_features_list = np.stack(results_df['Image Features'].values)
 else:
     # Process images with CLIP and extract features
     for image_file in os.listdir(image_dir):
@@ -61,8 +61,7 @@ else:
 
                 # Store the extracted image features for this image
                 image_features_flat = image_features.cpu().numpy().flatten()  # Flatten the image features
-                image_features_list.append(image_features_flat)  # Store for later use
-
+                image_features_list.append(image_features_flat)
                 # Convert image features to a list of strings for CSV storage
                 image_features_str = ','.join(map(str, image_features_flat))
 
@@ -81,7 +80,6 @@ else:
     results_df = pd.DataFrame(results)
     results_df.to_csv("image_classification_results.csv", index=False)
 
-# Now that we have image features, let's continue with the metadata
 print(results_df)
 
 # Load metadata and merge with the results_df
@@ -112,7 +110,6 @@ pdb.set_trace()
 metadata['likes_class'] = pd.cut(metadata['likes'], bins=[0, 200000, 400000, metadata['likes'].max()], labels=[0, 1, 2])
 y = metadata['likes_class'].astype(int).values  # Target labels
 
-# Step 10: Train/test split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Convert to PyTorch tensors
@@ -156,7 +153,6 @@ model = NeuralNetwork(input_size, hidden_size, output_size)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-# Step 12: Train the neural network
 num_epochs = 200
 for epoch in range(num_epochs):
     model.train()
@@ -171,7 +167,6 @@ for epoch in range(num_epochs):
 
     print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {running_loss / len(train_loader):.4f}")
 
-# Step 13: Evaluate the model on the test set
 model.eval()
 with torch.no_grad():
     test_outputs = model(X_test_tensor)
@@ -179,5 +174,4 @@ with torch.no_grad():
     accuracy = (predicted == y_test_tensor).sum().item() / y_test_tensor.size(0)
     print(f"Accuracy on the test set: {accuracy:.4f}")
 
-# Optional: Save the model
 torch.save(model.state_dict(), "Models/likes_classification_model_threeClass.pth")
