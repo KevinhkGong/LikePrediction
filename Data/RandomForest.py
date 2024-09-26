@@ -1,3 +1,5 @@
+import pdb
+
 import torch
 import clip
 from PIL import Image
@@ -7,6 +9,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, accuracy_score
 import numpy as np
+import joblib
 
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -72,11 +75,14 @@ metadata = pd.merge(metadata, results_df, on="Image")
 
 metadata['followers_normalized'] = (metadata['follower_count_at_t'] - metadata['follower_count_at_t'].min()) / (metadata['follower_count_at_t'].max() - metadata['follower_count_at_t'].min())
 metadata['comments_normalized'] = (metadata['no_of_comments'] - metadata['no_of_comments'].min()) / (metadata['no_of_comments'].max() - metadata['no_of_comments'].min())
-
+print("min follower", metadata['follower_count_at_t'].min())
+print("max follower", metadata['follower_count_at_t'].max())
+print("min comment", metadata['no_of_comments'].min())
+print("max comment", metadata['no_of_comments'].max())
 metadata = pd.concat([metadata, pd.get_dummies(metadata['Predicted Category'], prefix='category')], axis=1)
 
 print("max", metadata['likes'].max())
-metadata['likes_class'] = pd.cut(metadata['likes'], bins= [0, 1000, 10000, 50000, 100000, 200000, metadata['likes'].max()], labels=[0, 1, 2,3,4,5])
+metadata['likes_class'] = pd.cut(metadata['likes'], bins= [0, 200000, 400000, metadata['likes'].max()], labels=[0, 1, 2])
 
 X = metadata.drop(columns=['likes', 'likes_class', 'Image', 'Predicted Category', 'image_path', 't'])  # Features
 y = metadata['likes_class']  # Target
@@ -88,3 +94,8 @@ clf.fit(X_train, y_train)
 
 y_pred = clf.predict(X_test)
 print("Accuracy:", accuracy_score(y_test, y_pred))
+
+# Save Model
+feature_names = X.columns.tolist()
+joblib.dump((clf,feature_names), "Models/random_forest_threeClass.pkl")
+print("Model Saved")
