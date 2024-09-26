@@ -88,13 +88,14 @@ def predict(image_path, category, no_of_comments, follower_count_at_t):
 
     return predicted_class.item()
 
+# Modify Below to test =======================
 image_path = "insta_data/0.jpg"  # Replace with actual image path
 no_of_comments = 0
 t = 1594174009
 follower_count_at_t = 40934474
 likes = 154552
-category = "travel"
-
+category = "travel" # pick one that is closest from the Categories above
+# ================================
 
 predicted_label = predict(image_path, category, no_of_comments, follower_count_at_t)
 print(f"Predicted Likes Class: {predicted_label}")
